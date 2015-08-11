@@ -1,0 +1,27 @@
+{
+    "name": "stevenosloan/acreage",
+    "description": "A form library designed to work with Symfony validators",
+    "homepage": "https://github.com/stevenosloan/acreage",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Steven Sloan",
+            "email": "stevenosloan@gmail.com"
+        }
+    ],
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/http-foundation": "^2.7",
+        "symfony/validator": "^2.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*"
+    },
+    "autoload": {
+        "psr-4": { "Acreage\\": "Acreage" }
+    },
+    "autoload-dev" : {
+        "psr-4": { "Acreage\\Tests\\" : "tests" }
+    }
+}
