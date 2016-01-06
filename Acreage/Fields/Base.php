@@ -22,6 +22,7 @@ class Base {
   }
 
   public function cleanup() {
+    // empty method to be overriden
   }
 
   public function get_data(Request $request) {

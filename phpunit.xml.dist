@@ -2,6 +2,8 @@
 
 <phpunit colors="true"
          syntaxCheck="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutChangesToGlobalState="true"
          bootstrap="vendor/autoload.php" >
     <testsuites>
         <testsuite name="Acreage Test Suite">

@@ -10,7 +10,7 @@ class Input extends Base {
     return Render::tag( 'input', $this->attributes() );
   }
 
-  private function attributes() {
+  public function attributes() {
     $classes = array('form-input');
     if( $this->valid === false ) {
       array_push( $classes, 'field-error' );
