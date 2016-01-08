@@ -9,8 +9,8 @@ class Base {
 
   public $default = null;
 
-  public function __construct( $app, $name, $type, $options=array(), $constraints=array() ) {
-    $this->app   = $app;
+  public function __construct( $config, $name, $type, $options=array(), $constraints=array() ) {
+    $this->config   = $config;
     $this->name  = $name;
     $this->type  = $type;
     $this->value = array_key_exists('default', $options) ? $options['default'] : $this->default;

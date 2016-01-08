@@ -24,12 +24,12 @@ class Form {
   public $check_files     = false;
 
   public function __construct( $builder ) {
-    $this->app      = $builder->app;
+    $this->config   = $builder->config;
     $this->fields   = array();
     $this->data     = array();
     $this->set_defaults();
     $this->set_attributes();
-    $this->validator = $this->app['validator'];
+    $this->validator = $this->config['validator'];
     $this->set_template('form');
   }
 
@@ -66,7 +66,13 @@ class Form {
     if( array_key_exists($name, $this->defaults) ) {
       $options = array_merge(array('default' => $this->defaults[$name]), $options);
     }
-    array_push( $this->fields, new $this->field_type_map[$type]( $this->app, $name, $type, $options, $constraints ));
+
+    array_push( $this->fields,
+                new $this->field_type_map[$type]( $this->config,
+                                                  $name,
+                                                  $type,
+                                                  $options,
+                                                  $constraints ));
 
     return $this;
   }
@@ -76,7 +82,7 @@ class Form {
       $options = array_merge(array('default' => $this->defaults[$name]), $options);
     }
     array_push( $this->fields,
-                new $this->field_type_map['radio']( $this->app, $name, 'radio',
+                new $this->field_type_map['radio']( $this->config, $name, 'radio',
                                                     array_merge( $options,
                                                                  array( 'values' => $values )),
                                                     $constraints ));
@@ -89,7 +95,7 @@ class Form {
       $options = array_merge(array('default' => $this->defaults[$name]), $options);
     }
     array_push( $this->fields,
-                new $this->field_type_map['checkbox']( $this->app, $name, 'checkbox',
+                new $this->field_type_map['checkbox']( $this->config, $name, 'checkbox',
                                                     array_merge( $options,
                                                                  array( 'values' => $values )),
                                                     $constraints ));
@@ -99,7 +105,7 @@ class Form {
 
   public function add_file( $name, $options = array(), $constraints = array() ) {
     array_push( $this->fields,
-                new $this->field_type_map['file']( $this->app, $name, 'file',
+                new $this->field_type_map['file']( $this->config, $name, 'file',
                                                    $options,
                                                    $constraints + array(new Assert\File( array('binaryFormat' => false,
                                                                                                'maxSize' => '2048k'))) ));
@@ -119,7 +125,7 @@ class Form {
   # for templating
 
   public function render() {
-    return $this->app['mustache']->render( $this->template, $this );
+    return $this->config['mustache']->render( $this->template, $this );
   }
 
   public function render_form() {
