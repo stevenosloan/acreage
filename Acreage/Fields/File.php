@@ -98,3 +98,19 @@ class File extends Base {
     );
   }
 }
+
+
+/*
+
+
+
+  public function add_file( $name, $options = array(), $constraints = array() ) {
+    array_push( $this->fields,
+                new $this->field_type_map['file']( $this->config, $name, 'file',
+                                                   $options,
+                                                   $constraints + array() ));
+
+    return $this;
+  }
+
+*/

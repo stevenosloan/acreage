@@ -55,3 +55,22 @@ class Checkbox extends Base {
   }
 
 }
+
+/*
+
+
+
+  public function add_checkbox( $name, Array $values, $options = array(), $constraints = array() ) {
+    if( array_key_exists($name, $this->defaults) ) {
+      $options = array_merge(array('default' => $this->defaults[$name]), $options);
+    }
+    array_push( $this->fields,
+                new $this->field_type_map['checkbox']( $this->config, $name, 'checkbox',
+                                                    array_merge( $options,
+                                                                 array( 'values' => $values )),
+                                                    $constraints ));
+
+    return $this;
+  }
+
+*/

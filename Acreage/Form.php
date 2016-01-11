@@ -7,10 +7,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Form {
 
+  /**
+   *  list of field types that have a special
+   *  class for their construction. otherwise use
+   *  the generic "input" class"
+   */
   public $field_type_map = array(
+    'default'  => 'Acreage\Fields\Input',
     'hidden'   => 'Acreage\Fields\Hidden',
-    'text'     => 'Acreage\Fields\Input',
-    'email'    => 'Acreage\Fields\Input',
     'textarea' => 'Acreage\Fields\Textarea',
     'radio'    => 'Acreage\Fields\Radio',
     'checkbox' => 'Acreage\Fields\Checkbox',
@@ -78,53 +82,26 @@ class Form {
     return $this;
   }
 
+  /**
+   * meta method that takes type and attempts to generate field from that
+   */
   public function add_field( $name, $type, $options = array(), $constraints = array() ) {
     if( array_key_exists($name, $this->defaults) ) {
       $options = array_merge(array('default' => $this->defaults[$name]), $options);
     }
 
-    array_push( $this->fields,
-                new $this->field_type_map[$type]( $this->config,
-                                                  $name,
-                                                  $type,
-                                                  $options,
-                                                  $constraints ));
-
-    return $this;
-  }
-
-  public function add_radio( $name, Array $values, $options = array(), $constraints = array() ) {
-    if( array_key_exists($name, $this->defaults) ) {
-      $options = array_merge(array('default' => $this->defaults[$name]), $options);
+    if ( array_key_exists($type, $this->field_type_map) ) {
+      $field_class = $this->field_type_map[$type];
+    } else {
+      $field_class = $this->field_type_map['default'];
     }
+
     array_push( $this->fields,
-                new $this->field_type_map['radio']( $this->config, $name, 'radio',
-                                                    array_merge( $options,
-                                                                 array( 'values' => $values )),
-                                                    $constraints ));
-
-    return $this;
-  }
-
-  public function add_checkbox( $name, Array $values, $options = array(), $constraints = array() ) {
-    if( array_key_exists($name, $this->defaults) ) {
-      $options = array_merge(array('default' => $this->defaults[$name]), $options);
-    }
-    array_push( $this->fields,
-                new $this->field_type_map['checkbox']( $this->config, $name, 'checkbox',
-                                                    array_merge( $options,
-                                                                 array( 'values' => $values )),
-                                                    $constraints ));
-
-    return $this;
-  }
-
-  public function add_file( $name, $options = array(), $constraints = array() ) {
-    array_push( $this->fields,
-                new $this->field_type_map['file']( $this->config, $name, 'file',
-                                                   $options,
-                                                   $constraints + array(new Assert\File( array('binaryFormat' => false,
-                                                                                               'maxSize' => '2048k'))) ));
+                new $field_class( $this->config,
+                                  $name,
+                                  $type,
+                                  $options,
+                                  $constraints ));
 
     return $this;
   }

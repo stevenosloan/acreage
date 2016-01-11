@@ -235,6 +235,72 @@ class FormTest extends \PHPUnit_Framework_TestCase {
     $this->assertSame( 'email', $field2->type );
   }
 
+
+
+  /**
+   * @covers Acreage::Form::add_field
+   */
+  public function test_add_field_adds_correct_type_for_input_fields() {
+    $mock_config = array('validator'  => 'mock.validator');
+    $subject     = new Form( $mock_config );
+
+    $subject->add_field('text', 'text');
+    $subject->add_field('email', 'email');
+    $subject->add_field('number', 'number');
+
+    $this->assertInstanceOf('Acreage\Fields\Input', $subject->fields[0]);
+    $this->assertInstanceOf('Acreage\Fields\Input', $subject->fields[1]);
+    $this->assertInstanceOf('Acreage\Fields\Input', $subject->fields[2]);
+  }
+
+  /**
+   * @covers Acreage::Form::add_field
+   */
+  public function test_add_field_adds_correct_type_for_hidden_fields() {
+    $mock_config = array('validator'  => 'mock.validator');
+    $subject     = new Form( $mock_config );
+
+    $subject->add_field('field', 'hidden');
+
+    $this->assertInstanceOf('Acreage\Fields\Hidden', $subject->fields[0]);
+  }
+
+  /**
+   * @covers Acreage::Form::add_field
+   */
+  public function test_add_field_adds_correct_type_for_checkboxes() {
+    $mock_config = array('validator'  => 'mock.validator');
+    $subject     = new Form( $mock_config );
+
+    $subject->add_field('field', 'checkbox');
+
+    $this->assertInstanceOf('Acreage\Fields\Checkbox', $subject->fields[0]);
+  }
+
+  /**
+   * @covers Acreage::Form::add_field
+   */
+  public function test_add_field_adds_correct_type_for_radios() {
+    $mock_config = array('validator'  => 'mock.validator');
+    $subject     = new Form( $mock_config );
+
+    $subject->add_field('field', 'radio');
+
+    $this->assertInstanceOf('Acreage\Fields\Radio', $subject->fields[0]);
+  }
+
+  /**
+   * @covers Acreage::Form::add_field
+   */
+  public function test_add_field_adds_correct_type_for_files() {
+    $mock_config = array('validator'  => 'mock.validator');
+    $subject     = new Form( $mock_config );
+
+    $subject->add_field('field', 'file');
+
+    $this->assertInstanceOf('Acreage\Fields\File', $subject->fields[0]);
+  }
+
 }
 
 class MockValidator {
