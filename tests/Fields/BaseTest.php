@@ -130,27 +130,4 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
   }
 
 
-
-  /**
-   * @covers Acreage\Fields\Base::render_label
-   */
-  public function test_render_label_when_no_label_given() {
-    $subject = new Base( array(), 'subject', 'text' );
-
-    $this->assertSame('<label class="form-label" >Subject</label>',
-                      $subject->render_label());
-  }
-
-
-  /**
-   * @covers Acreage\Fields\Base::render_label
-   */
-  public function test_render_label_when_given_label() {
-    $subject = new Base( array(), 'subject', 'text',
-                         array( 'label' => array( 'content' => 'Test Label' )) );
-
-    $this->assertSame('<label class="form-label" >Test Label</label>',
-                      $subject->render_label());
-  }
-
 }

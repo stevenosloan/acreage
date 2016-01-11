@@ -17,7 +17,6 @@ class Form {
     'file'     => 'Acreage\Fields\File'
   );
 
-  public $is_rendered     = false;
   public $validated       = false;
   public $is_valid        = false;
   public $request_handled = false;
@@ -30,17 +29,10 @@ class Form {
     $this->set_defaults();
     $this->set_attributes();
     $this->validator = $this->config['validator'];
-    $this->set_template('form');
   }
 
   # configure form
   # -----------------------------------------------
-
-  public function set_template($template) {
-    $this->template = $template;
-
-    return $this;
-  }
 
   public function set_defaults( $defaults = array() ) {
     $this->defaults = $defaults;
@@ -119,55 +111,6 @@ class Form {
     }
 
     return $this;
-  }
-
-
-  # for templating
-
-  public function render() {
-    return $this->config['mustache']->render( $this->template, $this );
-  }
-
-  public function render_form() {
-    if( !$this->is_rendered ) {
-      $this->rendered_form = Render::tag( 'form', array_merge(
-        $this->attributes,
-        array( 'content' => implode('', array(
-          $this->render_fields(),
-          $this->render_submit()
-      )))));
-
-      $this->is_rendered = true;
-    }
-
-    return $this->rendered_form;
-  }
-
-  public function render_fields() {
-    $output = array();
-    foreach( $this->fields as $field ) {
-      if( array_key_exists($field->name, $this->data) ) {
-        $field->value = $this->data[$field->name];
-      } elseif ( array_key_exists($field->name, $this->defaults) &&
-                 !isset($field->value) ) {
-        $field->value = $this->defaults[$field->name];
-      }
-
-      array_push( $output, $field->render() );
-    }
-
-    return implode('', $output);
-  }
-
-  public function render_submit() {
-    return Render::tag( 'div', array(
-      'class' => 'form-group',
-      'content' => Render::tag( 'input', array(
-        'type' => 'submit',
-        'name' => 'submit',
-        'value' => 'Submit',
-        'class' => 'btn'
-      ))));
   }
 
   # request
