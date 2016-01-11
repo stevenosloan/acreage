@@ -7,22 +7,33 @@ use \Symfony\Component\HttpFoundation\Request;
 
 class Base {
 
-  public $default = null;
+  public $default   = null;
+
+  public $errors    = array();
+  public $validated = false;
+  public $valid     = null;
 
   public function __construct( $config, $name, $type, $options=array(), $constraints=array() ) {
-    $this->config   = $config;
-    $this->name  = $name;
-    $this->type  = $type;
-    $this->value = array_key_exists('default', $options) ? $options['default'] : $this->default;
+    $this->config      = $config;
+    $this->name        = $name;
+    $this->type        = $type;
+    $this->value       = array_key_exists('default', $options) ? $options['default'] : $this->default;
     $this->options     = $options;
     $this->constraints = $constraints;
-
-    $this->validated = false;
-    $this->valid     = null;
   }
 
   public function cleanup() {
     // empty method to be overriden
+  }
+
+  public function to_array() {
+    return array( 'name'  => $this->name,
+                  'type'  => $this->type,
+                  'value' => $this->value,
+
+                  'valid'     => $this->valid,
+                  'errors'    => $this->errors,
+                  'validated' => $this->validated );
   }
 
   public function get_data(Request $request) {

@@ -8,51 +8,18 @@ use \Symfony\Component\HttpFoundation\Request;
 class InputTest extends \PHPUnit_Framework_TestCase {
 
   /**
-   * @covers Acreage\Fields\Input::attributes
+   * @covers Acreage\Fields\Input::to_array
    */
-  public function test_attributes() {
-    $subject = new Input( array(), 'subject', 'text' );
+  public function test_to_array() {
+    $subject = new Input( array(), 'name', 'text', array('default' => 'default'));
 
-    $attrs = $subject->attributes();
-
-    $this->assertSame( array( 'type' => 'text',
-                              'name' => 'subject',
-                              'value' => null,
-                              'class' => 'form-input' ),
-                       $attrs );
-  }
-
-  /**
-   * @covers Acreage\Fields\Input::attributes
-   */
-  public function test_attributes_after_handling_data() {
-    $subject = new Input( array(), 'subject', 'text' );
-    $mock    = new Request( array( 'subject' => 'value' ));
-
-    $subject->get_data( $mock );
-    $attrs = $subject->attributes();
-
-    $this->assertSame( array( 'type' => 'text',
-                              'name' => 'subject',
-                              'value' => 'value',
-                              'class' => 'form-input' ),
-                       $attrs );
-  }
-
-  /**
-   * @covers Acreage\Fields\Input::attributes
-   */
-  public function test_attributes_after_failing_validation() {
-    $subject = new Input( array(), 'subject', 'text' );
-
-    $subject->add_validation( array('invalid') );
-    $attrs = $subject->attributes();
-
-    $this->assertSame( array( 'type' => 'text',
-                              'name' => 'subject',
-                              'value' => null,
-                              'class' => 'form-input field-error' ),
-                       $attrs );
+    $this->assertSame( array( 'name'   => 'name',
+                              'type'   => 'text',
+                              'value'  => 'default',
+                              'valid'  => null,
+                              'errors' => array(),
+                              'validated' => false ),
+                       $subject->to_array() );
   }
 
 }
