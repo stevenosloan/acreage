@@ -22,6 +22,30 @@ class Form {
   public $request_handled = false;
   public $check_files     = false;
 
+  /**
+   *  create the form from an array of data
+   */
+  public static function create_from_data( $config, $data ) {
+    $form = new Form( $config );
+
+    if( array_key_exists('attributes', $data) ) {
+      $form->set_attributes( $data['attributes'] );
+    }
+
+    if( array_key_exists('defaults', $data) ) {
+      $form->set_defaults( $data['defaults'] );
+    }
+
+    foreach( $data['fields'] as $field_src ) {
+      $field = array_merge( array( 'options'     => array(),
+                                   'constraints' => array() ),
+                            $field_src );
+      $form->add_field( $field['name'], $field['type'], $field['options'], $field['constraints'] );
+    }
+
+    return $form;
+  }
+
   public function __construct( $config = array() ) {
     $this->config   = (array) $config;
     $this->fields   = array();

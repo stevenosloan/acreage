@@ -205,6 +205,36 @@ class FormTest extends \PHPUnit_Framework_TestCase {
     }
   }
 
+
+  /**
+   * @covers Acreage::Form::create_from_data
+   */
+  public function test_create_from_data_generates_form_from_data() {
+    $mock_config = array('validator'  => 'mock.validator');
+    $form_data   = array('attributes' => array('class'  => 'form yo',
+                                               'method' => 'GET'),
+                         'defaults'   => array('field1' => 'default'),
+                         'fields'     => array( array('name' => 'field1',
+                                                      'type' => 'text'),
+                                                array('name' => 'field2',
+                                                      'type' => 'email')));
+
+    $subject = Form::create_from_data( $mock_config, $form_data );
+
+    $this->assertInstanceOf( 'Acreage\Form', $subject );
+
+    $this->assertSame('form yo', $subject->attributes['class']);
+    $this->assertSame('GET', $subject->attributes['method']);
+
+    $field1 = $subject->fields[0];
+    $this->assertSame( 'default', $field1->value );
+    $this->assertSame( 'text', $field1->type );
+
+    $field2 = $subject->fields[1];
+    $this->assertSame( null, $field2->value );
+    $this->assertSame( 'email', $field2->type );
+  }
+
 }
 
 class MockValidator {
