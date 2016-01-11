@@ -13,9 +13,8 @@ class FormTest extends \PHPUnit_Framework_TestCase {
   public function test_sets_values_from_builder() {
     $mock_validator = 'config.validator';
     $mock_config    = array('validator' => $mock_validator);
-    $mock_builder   = (object) array( 'config' => $mock_config );
 
-    $subject = new Form( $mock_builder );
+    $subject = new Form( $mock_config );
 
     $this->assertSame( $mock_config, $subject->config );
     $this->assertSame( array(), $subject->fields );
@@ -33,9 +32,9 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::set_defaults
    */
   public function test_set_defaults_sets_defaults_and_returns_self() {
-    $mock_builder = (object) array( 'config' => array('validator' => 'config.validator') );
-    $subject      = new Form( $mock_builder );
-    $defaults     = array('default' => 'value');
+    $mock_config = array('validator' => 'config.validator');
+    $subject     = new Form( $mock_config );
+    $defaults    = array('default' => 'value');
 
     $resp = $subject->set_defaults( $defaults );
 
@@ -48,8 +47,8 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::set_attributes
    */
   public function test_set_attributes_merges_attributes_and_returns_self() {
-    $mock_builder = (object) array( 'config' => array('validator' => 'config.validator') );
-    $subject      = new Form( $mock_builder );
+    $mock_config = array('validator' => 'config.validator');
+    $subject     = new Form( $mock_config );
 
     $resp = $subject->set_attributes( array('method' => 'GET') );
 
@@ -65,9 +64,9 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::success_message
    */
   public function test_success_message_sets_message_and_returns_self() {
-    $mock_builder = (object) array( 'config' => array('validator' => 'config.validator') );
-    $subject      = new Form( $mock_builder );
-    $message      = 'Hodor!';
+    $mock_config = array('validator' => 'config.validator');
+    $subject     = new Form( $mock_config );
+    $message     = 'Hodor!';
 
     $resp = $subject->success_message($message);
 
@@ -80,8 +79,8 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::add_field
    */
   public function test_add_field_adds_a_basic_field_and_returns_self() {
-    $mock_builder = (object) array( 'config' => array('validator' => 'config.validator') );
-    $subject      = new Form( $mock_builder );
+    $mock_config = array('validator' => 'config.validator');
+    $subject     = new Form( $mock_config );
 
     $resp = $subject->add_field( 'name', 'text' );
 
@@ -99,8 +98,8 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::add_field
    */
   public function test_add_field_adds_a_field_with_a_default_if_default_set_on_form() {
-    $mock_builder = (object) array( 'config' => array('validator' => 'config.validator') );
-    $subject      = new Form( $mock_builder );
+    $mock_config = array('validator' => 'config.validator');
+    $subject     = new Form( $mock_config );
 
     $resp = $subject->set_defaults( array('name' => 'default') )
                     ->add_field( 'name', 'text' );
@@ -123,9 +122,9 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::handle_request
    */
   public function test_handle_request_sets_data_and_validates_fields() {
-    $mock_builder = (object) array( 'config' => array( 'validator' => new MockValidator()) );
-    $subject      = new Form( $mock_builder );
-    $request      = new Request( array('name' => 'value') );
+    $mock_config = array( 'validator' => new MockValidator());
+    $subject     = new Form( $mock_config );
+    $request     = new Request( array('name' => 'value') );
 
     $resp = $subject->set_attributes(array('method' => 'GET'))
                     ->add_field('name', 'text')
@@ -141,9 +140,9 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::handle_request
    */
   public function test_handle_request_sets_data_but_doesnt_validate_with_non_matching_method() {
-    $mock_builder = (object) array( 'config' => array( 'validator' => new MockValidator()) );
-    $subject      = new Form( $mock_builder );
-    $request      = new Request( array('name' => 'value') );
+    $mock_config = array( 'validator' => new MockValidator());
+    $subject     = new Form( $mock_config );
+    $request     = new Request( array('name' => 'value') );
 
     $resp = $subject->add_field('name', 'text')
                     ->handle_request( $request );
@@ -158,9 +157,9 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::handle_request
    */
   public function test_handle_request_runs_validation_on_fields_with_matching_method() {
-    $mock_builder = (object) array( 'config' => array( 'validator' => new MockValidator()) );
-    $subject      = new Form( $mock_builder );
-    $request      = new Request( array('one' => 'one',
+    $mock_config = array( 'validator' => new MockValidator());
+    $subject     = new Form( $mock_config );
+    $request     = new Request( array('one' => 'one',
                                        'two' => 'two') );
 
     $resp = $subject->set_attributes(array('method' => 'GET'))
@@ -182,9 +181,9 @@ class FormTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage::Form::handle_request
    */
   public function test_handle_request_runs_validation_on_fields_with_matching_method_and_is_invalid_if_invalid() {
-    $mock_builder = (object) array( 'config' => array( 'validator' => new MockValidator(array('two' => array('invalid')))) );
-    $subject      = new Form( $mock_builder );
-    $request      = new Request( array('one' => 'one',
+    $mock_config = array( 'validator' => new MockValidator(array('two' => array('invalid'))));
+    $subject     = new Form( $mock_config );
+    $request     = new Request( array('one' => 'one',
                                        'two' => 'two') );
 
     $resp = $subject->set_attributes(array('method' => 'GET'))

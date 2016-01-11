@@ -23,8 +23,8 @@ class Form {
   public $request_handled = false;
   public $check_files     = false;
 
-  public function __construct( $builder ) {
-    $this->config   = $builder->config;
+  public function __construct( $config = array() ) {
+    $this->config   = (array) $config;
     $this->fields   = array();
     $this->data     = array();
     $this->set_defaults();
