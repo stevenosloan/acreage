@@ -19,7 +19,7 @@ class Base {
     $this->type        = $type;
     $this->value       = array_key_exists('default', $options) ? $options['default'] : $this->default;
     $this->options     = $options;
-    $this->constraints = $constraints;
+    $this->constraints = $this->resolve_constraints($constraints);
   }
 
   public function cleanup() {
@@ -64,6 +64,24 @@ class Base {
 
   protected function after_validation() {
     // empty method to be overriden
+  }
+
+  public function resolve_constraints( $constraints=array() ) {
+    return array_map(
+      function( $key, $val ) {
+        if( is_object($val) ) {
+          return $val;
+        } else if( is_array($val) ) {
+          $constraint = 'Symfony\Component\Validator\Constraints\\'.$key;
+          return new $constraint($val);
+        } else {
+          $constraint = 'Symfony\Component\Validator\Constraints\\'.$val;
+          return new $constraint();
+        }
+      },
+      array_keys($constraints),
+      array_values($constraints)
+    );
   }
 
 }

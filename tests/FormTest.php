@@ -234,6 +234,43 @@ class FormTest extends \PHPUnit_Framework_TestCase {
   }
 
 
+  /**
+   * @covers Acreage::Form::create_from_data
+   */
+  public function test_create_from_data_generates_form_with_constraints() {
+    $mock_config = array('validator'  => 'mock.validator');
+    $form_data   = array('attributes' => array('class'  => 'form yo',
+                                               'method' => 'GET'),
+                         'defaults'   => array('field1' => 'default'),
+                         'fields'     => array( array('name' => 'field1',
+                                                      'type' => 'text',
+                                                      'constraints' => array('NotBlank')),
+                                                array('name' => 'field2',
+                                                      'type' => 'email',
+                                                      'constraints' => array('NotBlank', 'Email')),
+                                                array('name' => 'field3',
+                                                      'type' => 'text',
+                                                      'constraints' => array('EqualTo' => array('value' => 'value')))));
+
+    $subject = Form::create_from_data( $mock_config, $form_data );
+
+    $field1 = $subject->fields[0];
+    $field2 = $subject->fields[1];
+    $field3 = $subject->fields[2];
+
+    $this->assertInstanceOf( 'Symfony\Component\Validator\Constraints\NotBlank',
+                              $field1->constraints[0] );
+    $this->assertInstanceOf( 'Symfony\Component\Validator\Constraints\NotBlank',
+                              $field2->constraints[0] );
+    $this->assertInstanceOf( 'Symfony\Component\Validator\Constraints\Email',
+                              $field2->constraints[1] );
+    $this->assertInstanceOf( 'Symfony\Component\Validator\Constraints\EqualTo',
+                              $field3->constraints[0] );
+    $this->assertSame( 'value',
+                       $field3->constraints[0]->value );
+  }
+
+
 
   /**
    * @covers Acreage::Form::add_field

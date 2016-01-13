@@ -4,6 +4,7 @@ namespace Acreage\Tests\Fields;
 
 use Acreage\Fields\Base;
 use \Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class BaseTest extends \PHPUnit_Framework_TestCase {
 
@@ -15,6 +16,43 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertSame( 'value',
                         $subject->value );
+  }
+
+  /**
+   * @covers Acreage\Fields\Base::__construct
+   */
+  public function test_construct_allows_passing_constraints_as_class() {
+    $subject = new Base( array(), 'subject', 'text',
+                         array('default' => 'value'),
+                         array( new Assert\NotBlank ) );
+
+
+    $this->assertInstanceOf( 'Symfony\Component\Validator\Constraints\NotBlank',
+                             $subject->constraints[0] );
+  }
+
+  /**
+   * @covers Acreage\Fields\Base::__construct
+   */
+  public function test_construct_resolves_constraints() {
+    $subject = new Base( array(), 'subject', 'text',
+                         array('default' => 'value'),
+                         array('NotBlank') );
+
+    $this->assertInstanceOf( 'Symfony\Component\Validator\Constraints\NotBlank',
+                             $subject->constraints[0] );
+  }
+
+  /**
+   * @covers Acreage\Fields\Base::__construct
+   */
+  public function test_construct_resolves_constraints_and_gives_options() {
+    $subject = new Base( array(), 'subject', 'text',
+                         array('default' => 'value'),
+                         array('NotBlank') );
+
+    $this->assertInstanceOf( 'Symfony\Component\Validator\Constraints\NotBlank',
+                             $subject->constraints[0] );
   }
 
 
