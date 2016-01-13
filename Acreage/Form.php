@@ -69,8 +69,7 @@ class Form {
   }
 
   public function set_attributes( $attributes = array() ) {
-    $this->attributes = array_merge( array( 'method' => 'POST',
-                                            'class'  => 'form' ),
+    $this->attributes = array_merge( array('method' => 'POST'),
                                      $attributes );
 
     return $this;

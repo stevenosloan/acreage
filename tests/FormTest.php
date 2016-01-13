@@ -20,8 +20,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
     $this->assertSame( array(), $subject->fields );
     $this->assertSame( array(), $subject->data );
     $this->assertSame( array(), $subject->defaults );
-    $this->assertSame( array( 'method' => 'POST',
-                              'class'  => 'form'),
+    $this->assertSame( array( 'method' => 'POST' ),
                        $subject->attributes );
     $this->assertSame( $mock_validator, $subject->validator );
   }
@@ -53,8 +52,7 @@ class FormTest extends \PHPUnit_Framework_TestCase {
     $resp = $subject->set_attributes( array('method' => 'GET') );
 
     $this->assertSame( $subject, $resp );
-    $this->assertSame( array( 'method' => 'GET',
-                              'class'  => 'form' ),
+    $this->assertSame( array( 'method' => 'GET' ),
                        $subject->attributes );
 
   }
