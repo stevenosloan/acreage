@@ -1,0 +1,18 @@
+{
+  "name": "stevenosloan/acreage-example",
+  "description": "example application rendering with mustache",
+  "type": "project",
+  "require": {
+    "silex/silex": "~1.2",
+    "symfony/yaml": "~2.7",
+    "mustache/silex-provider": "~1.1"
+  },
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Acreage\\": "../Acreage"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+attributes:
+  action: /forms/base
+  method: POST
+fields:
+  - name: field1
+    type: text
