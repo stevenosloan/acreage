@@ -1,0 +1,14 @@
+<div>
+  {{# label }}<label>{{ . }}</label>{{/ label }}
+  {{# radios }}
+  <div class="field-row">
+    <input type="radio" class="form-radio" value="{{ value }}" name="{{ name }}" id="{{ id }}" {{# checked }}checked="true"{{/ checked }} />
+    <label class="form-inline-label" for="{{ id }}">{{ label }}</label>
+  </div>
+  {{/ radios }}
+  {{# validated }}{{^ valid }}
+    <div><ul>
+      {{# errors }}<li>{{ getMessage }}</li>{{/ errors }}
+    </ul></div>
+  {{/ valid }}{{/ validated }}
+</div>

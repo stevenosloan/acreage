@@ -14,7 +14,7 @@ class Radio extends Base {
       'label'     => isset($this->options['label']) ? $this->options['label'] : false,
       'valid'     => $this->valid,
       'validated' => $this->validated,
-      'errors'    => array(),
+      'errors'    => $this->errors,
       'radios'    => array_map(
         function($value, $label, $idx) {
           return array( 'name'    => $this->name,

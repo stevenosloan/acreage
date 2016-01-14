@@ -5,7 +5,9 @@
   "require": {
     "silex/silex": "~1.2",
     "symfony/yaml": "~2.7",
-    "mustache/silex-provider": "~1.1"
+    "mustache/silex-provider": "~1.1",
+    "symfony/http-foundation": "^2.7",
+    "symfony/validator": "^2.7"
   },
   "config": {
     "vendor-dir": "vendor"

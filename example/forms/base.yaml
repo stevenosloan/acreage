@@ -4,3 +4,16 @@ attributes:
 fields:
   - name: field1
     type: text
+    options:
+      label: Enter Text
+    constraints:
+      - NotBlank
+  - name: field2
+    type: radio
+    options:
+      label: GOT Character
+      radios:
+        hodor: Hodor
+        jon: John Snow
+    constraints:
+      - NotBlank

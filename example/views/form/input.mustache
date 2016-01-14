@@ -1,0 +1,10 @@
+<div>
+  {{# label }}<label>{{ . }}</label>{{/ label }}
+  <input class="{{# invalid }}field-error{{/ invalid }}" name="{{ name }}" type="{{ type }}" value="{{ value }}" />
+  {{# validated }}{{^ valid }}
+    <div><ul>
+      {{# errors }}<li>{{ getMessage }}</li>{{/ errors }}
+    </ul></div>
+  {{/ valid }}{{/ validated }}
+</div>
+

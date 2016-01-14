@@ -1,0 +1,14 @@
+<form method="{{ attributes.method }}" action="{{ attributes.action }}">
+  {{# invalid }}
+    <div><p>Please fix the form errors below</p></div>
+  {{/ invalid }}
+
+  {{# success }}
+    <div>Success! The form is valid</div>
+  {{/ success }}
+  {{^ success }}
+    {{{ content }}}
+    <button type="submit">Submit</button>
+  {{/ success }}
+
+</form>

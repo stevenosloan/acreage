@@ -12,7 +12,7 @@ class Form {
    *  class for their construction. otherwise use
    *  the generic "input" class"
    */
-  public $field_type_map = array(
+  public static $field_type_map = array(
     'default'  => 'Acreage\Fields\Input',
     'hidden'   => 'Acreage\Fields\Hidden',
     'textarea' => 'Acreage\Fields\Textarea',
@@ -89,10 +89,10 @@ class Form {
       $options = array_merge(array('default' => $this->defaults[$name]), $options);
     }
 
-    if ( array_key_exists($type, $this->field_type_map) ) {
-      $field_class = $this->field_type_map[$type];
+    if ( array_key_exists($type, self::$field_type_map) ) {
+      $field_class = self::$field_type_map[$type];
     } else {
-      $field_class = $this->field_type_map['default'];
+      $field_class = self::$field_type_map['default'];
     }
 
     array_push( $this->fields,
