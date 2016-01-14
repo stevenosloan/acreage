@@ -11,6 +11,7 @@ class Radio extends Base {
       'name'      => $this->name,
       'type'      => 'radio',
       'value'     => $this->value,
+      'label'     => isset($this->options['label']) ? $this->options['label'] : false,
       'valid'     => $this->valid,
       'validated' => $this->validated,
       'errors'    => array(),

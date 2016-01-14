@@ -14,11 +14,12 @@ class RadioTest extends \PHPUnit_Framework_TestCase {
                           array( 'radios' => array(
                             'rdio1' => 'First Radio',
                             'rdio2' => 'Second Radio'
-                          ) ) );
+                          ), 'label' => 'Radio Field' ) );
 
     $this->assertSame( array( 'name' => 'name',
                               'type' => 'radio',
                               'value' => null,
+                              'label' => 'Radio Field',
                               'valid' => null,
                               'validated' => false,
                               'errors' => array(),
@@ -52,6 +53,7 @@ class RadioTest extends \PHPUnit_Framework_TestCase {
     $this->assertSame( array( 'name' => 'name',
                               'type' => 'radio',
                               'value' => 'rdio2',
+                              'label' => false,
                               'valid' => null,
                               'validated' => false,
                               'errors' => array(),

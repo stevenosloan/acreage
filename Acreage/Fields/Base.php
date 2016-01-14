@@ -30,7 +30,7 @@ class Base {
     return array( 'name'  => $this->name,
                   'type'  => $this->type,
                   'value' => $this->value,
-
+                  'label' => isset($this->options['label']) ? $this->options['label'] : false,
                   'valid'     => $this->valid,
                   'errors'    => $this->errors,
                   'validated' => $this->validated );

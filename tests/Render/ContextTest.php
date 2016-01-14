@@ -29,6 +29,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase {
                                                 array( 'name'   => 'field1',
                                                        'type'   => 'text',
                                                        'value'  => null,
+                                                       'label'  => false,
                                                        'valid'  => null,
                                                        'errors' => array(),
                                                        'validated' => false ) ),

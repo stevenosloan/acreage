@@ -172,11 +172,13 @@ class BaseTest extends \PHPUnit_Framework_TestCase {
    * @covers Acreage\Fields\Base::to_array
    */
   public function test_to_array() {
-    $subject = new Base( array(), 'name', 'text', array('default' => 'default'));
+    $subject = new Base( array(), 'name', 'text', array('default' => 'default',
+                                                        'label'   => 'Field Label'));
 
     $this->assertSame( array( 'name'   => 'name',
                               'type'   => 'text',
                               'value'  => 'default',
+                              'label'  => 'Field Label',
                               'valid'  => null,
                               'errors' => array(),
                               'validated' => false ),
