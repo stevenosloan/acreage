@@ -3,7 +3,6 @@
 namespace Acreage\Tests\Fields;
 
 use Acreage\Fields\Input;
-use \Symfony\Component\HttpFoundation\Request;
 
 class InputTest extends \PHPUnit_Framework_TestCase {
 
