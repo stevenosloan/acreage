@@ -1,0 +1,9 @@
+<div>
+  {{# label }}<label>{{ . }}</label>{{/ label }}
+  <textarea name="{{ name }}">{{ value }}</textarea>
+  {{# validated }}{{^ valid }}
+    <div><ul>
+      {{# errors }}<li>{{ getMessage }}</li>{{/ errors }}
+    </ul></div>
+  {{/ valid }}{{/ validated }}
+</div>

@@ -5,15 +5,24 @@ fields:
   - name: field1
     type: text
     options:
-      label: Enter Text
+      label: Text Field
     constraints:
       - NotBlank
   - name: field2
     type: radio
     options:
-      label: GOT Character
+      label: Here is a Radio
       radios:
         hodor: Hodor
         jon: John Snow
     constraints:
       - NotBlank
+  - name: field3
+    type: textarea
+    options:
+      label: Textarea
+    constraints:
+      NotBlank: []
+      Length:
+        min: 10
+        max: 140
