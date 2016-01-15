@@ -18,7 +18,15 @@ fields:
         multiple: true
         multipleMessage: Pick only GOT characters
         min: 1
-  - name: field1
+  - name: hidden_field
+    type: hidden
+    options:
+      default: hodor
+    constraints:
+      Choice:
+        choices:
+          - hodor
+  - name: input_field
     type: text
     options:
       label: Text Field
